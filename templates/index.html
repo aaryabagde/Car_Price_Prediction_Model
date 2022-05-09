@@ -23,7 +23,7 @@
             <div class="card mt-50" style="width: 100%; height: 100%">
                 <div class="card-header" style="text-align: center">
                     <h1>Welcome to Car Price Predictor</h1>
-                    <h5>Project Mentor: Ranjushree Pal</h5> 
+                    <h5>Project Mentor: Prof. Ranjushree Pal</h5> 
                     <h5>Thrid year: Aarya Bagde, Divya Naidu, Manan Shah</h5>
                     <h5>Second year: Ankit, Dhruvil Shah, Meet Gosar</h5>
                 </div>
@@ -36,7 +36,7 @@
                         <div class="col-md-10 form-group" style="text-align: center">
                             <label><b>Select the company:</b> </label><br>
                             <select class="selectpicker form-control" id="company" name="company" required="1"
-                                onchange="load_car_models(this.id,'car_model')">
+                                    onchange="load_car_models(this.id,'car_models')">
                                 {% for company in companies %}
                                 <option value="{{ company }}">{{ company }}</option>
                                 {% endfor %}
@@ -44,10 +44,7 @@
                         </div>
                         <div class="col-md-10 form-group" style="text-align: center">
                             <label><b>Select the model:</b> </label><br>
-                            <select class="selectpicker form-control" id="car_model" name="car_model" required="1">
-                                {% for model in car_models %}
-                                <option value="{{ model }}">{{ model }}</option>
-                                {% endfor %}
+                            <select class="selectpicker form-control" id="car_models" name="car_models" required="1">
                             </select>
                         </div>
                         <div class="col-md-10 form-group" style="text-align: center">
@@ -69,10 +66,10 @@
                         <div class="col-md-10 form-group" style="text-align: center">
                             <label><b>Enter the Number of Kilometres that the car has travelled:</b> </label><br>
                             <input type="text" class="form-control" id="kilo_driven" name="kilo_driven"
-                                placeholder="Enter the kilometres driven ">
+                                   placeholder="Enter the kilometres driven ">
                         </div>
                         <div class="col-md-10 form-group" style="text-align: center">
-                            <button class="btn btn-primary form-control" onclick="send_data()">Predict Price</button>
+                            <button  class="btn btn-primary form-control" onclick="send_data()">Predict Price</button>
                         </div>
                     </form>
                     <br>
@@ -85,53 +82,57 @@
             </div>
         </div>
     </div>
-
+    
     <script>
-        // function load_car_models(company_id , car_model_id){
-        // var company=document.getElementById(company_id);
-        // var car_model= document.getElementById(car_model_id);
-        // {% for company in companies %}
-        //     if( company.value == "{{ company }}")
-        //     {
-        //         {% for model in car_models %}
-        //             {% if company in model %}
-
-        //                 var newOption= document.createElement("option");
-        //                 newOption.value="{{ model }}";
-        //                 newOption.innerHTML="{{ model }}";
-        //                 car_model.options.add(newOption);
-        //             {% endif %}
-        //         {% endfor %}
-        //     }
-        // {% endfor %}
-
-        // }
-
+    
+        function load_car_models(company_id,car_model_id)
+        {
+            var company=document.getElementById(company_id);
+            var car_model= document.getElementById(car_model_id);
+            console.log(company.value);
+            car_model.value="";
+            car_model.innerHTML="";
+            {% for company in companies %}
+                if( company.value == "{{ company }}")
+                {
+                    {% for model in car_models %}
+                        {% if company in model %}
+    
+                            var newOption= document.createElement("option");
+                            newOption.value="{{ model }}";
+                            newOption.innerHTML="{{ model }}";
+                            car_model.options.add(newOption);
+                        {% endif %}
+                    {% endfor %}
+                }
+            {% endfor %}
+        }
+    
         function form_handler(event) {
             event.preventDefault(); // Don't submit the form normally
         }
-        function send_data() {
-            document.querySelector('form').addEventListener("submit", form_handler);
-
-            var fd = new FormData(document.querySelector('form'));
-
-            var xhr = new XMLHttpRequest({ mozSystem: true });
-
-            xhr.open('POST', '/predict', true);
-            document.getElementById('prediction').innerHTML = "Wait! Predicting Price.....";
-            xhr.onreadystatechange = function () {
-                if (xhr.readyState == XMLHttpRequest.DONE) {
-                    document.getElementById('prediction').innerHTML = "Prediction: ₹" + xhr.responseText;
-
+        function send_data()
+        {
+            document.querySelector('form').addEventListener("submit",form_handler);
+    
+            var fd=new FormData(document.querySelector('form'));
+    
+            var xhr= new XMLHttpRequest({mozSystem: true});
+    
+            xhr.open('POST','/predict',true);
+            document.getElementById('prediction').innerHTML="Wait! Predicting Price.....";
+            xhr.onreadystatechange = function(){
+                if(xhr.readyState == XMLHttpRequest.DONE){
+                    document.getElementById('prediction').innerHTML="Prediction: ₹"+xhr.responseText;
+    
                 }
             };
-
-            xhr.onload = function () { };
-
+    
+            xhr.onload= function(){};
+    
             xhr.send(fd);
         }
     </script>
-
 
 
     <!-- Optional JavaScript; choose one of the two! -->
