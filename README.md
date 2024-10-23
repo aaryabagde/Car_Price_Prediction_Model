@@ -31,7 +31,33 @@ The data was downloaded from kaggle having 1000 enteries and 6 columns. The 5 fe
 | `year` | The year in which the car was purchased |
 | `kms_driven` | The number of kilometers the car has driven |
 
-## Data PreProcessing and EDA
+## Data PreProcessing
+We began by inspecting the dataset for any missing values. Next, we addressed data type inconsistencies: the 'year' column, initially in string format, was converted to an integer for better handling in modeling. The 'price' column, also in string format, contained commas which were removed. Five rows in the 'price' column had erroneous values, and given the negligible impact (ratio of 1000:5), we chose to drop these rows. After cleaning, we split the data, treating 'Price' as the target variable and using the remaining columns as features for model training.
 
+## EDA
+1. **Data Distribution Analysis**: I started by analyzing the distribution of key numerical features like 'price' and 'year' using histograms and box plots. This helped me identify outliers, understand the spread of the data, and spot any skewness that might affect model performance.
+
+2. **Summary Statistics**: I generated summary statistics for all numerical columns to get an overall view of the dataset. This included calculating the mean, median, standard deviation, and quartiles to understand central tendencies and variation in the data.
+
+3. **Correlation Analysis**: To explore relationships between the features, I created a correlation matrix heatmap. This helped me identify which features were strongly correlated with the target variable ('Price') and if there were any multicollinearity issues among the independent variables.
+
+4. **Outlier Detection**: I conducted an outlier analysis using Z-scores and box plots, particularly focusing on the 'price' column. This helped me identify any extreme values that could potentially skew the model results or require further treatment.
+
+5. **Feature Relationships**: I visualized relationships between key features and the target variable by creating scatter plots. For instance, I looked at how 'year' and 'price' interacted, which gave me insights into possible trends and patterns that could guide feature selection for modeling.
+
+These steps ensured a deeper understanding of the dataset before moving on to model building.
+
+## Modelling
+The simplest model for regression analysis is Linear Regression, and as a data scientist, I believe in using the most straightforward model that effectively meets our needs. If a simple model can provide accurate predictions, it should always be the first choice. With this in mind, we opted to proceed with Linear Regression for our analysis.
+
+## Conclusion
+Received a R2 score of 0.89
+
+## Model Deployment
+This is the rearmost stage of any artificial intelligence model.
+We have designed a user-friendly interface. We used flask
+software for making an HTML file for predicting or
+estimating used second hand cars ,which takes the input for
+each parameter and predicts the sale price for a used car.
 
 
